@@ -1,0 +1,40 @@
+# SEO keywords and description for your site.
+description = "Damian Kuraś Homepage"
+subtitle = ""
+keywords = "Damian Kuraś, blog, programming, algorithms"
+contentTypeName = "posts"
+jsonLD = true
+showAuthor = false
+
+[author]
+  name = "Damian Kuraś"
+  email = "damian_kuras@outlook.com"
+
+[header]
+
+[footer]
+  since = 2022
+  poweredby = false
+
+[social_media]
+  [[social_media.items]]
+    enabled = true
+    title = 'Github'
+    icon = 'brand-github'
+    link = 'https://github.com/DamianKuras'
+
+  [[social_media.items]]
+    enabled = true
+    title = 'rss'
+    icon = 'rss-svgrepo-com'
+    link = 'https://damiankuras.com/posts/index.xml'
+
+[pwa]
+  enabled = true
+  icon_sizes = [192, 512]
+
+  # will be used as the manifest.json file and merge the default one
+  # https://developer.mozilla.org/en-US/docs/Web/Manifest
+  # https://web.dev/add-manifest/
+  [manifest]
+  description = "Personal website for Damian Kuraś"

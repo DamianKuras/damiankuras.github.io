@@ -1,0 +1,39 @@
+baseURL = "https://damiankuras.com/"
+title = "Damian Kuraś"
+copyright = "Damian Kuraś"
+pagination.pagerSize = 10
+languageCode = "en"
+enableEmoji = true
+defaultContentLanguage = "en"
+theme = ["hugo-cloak-email","tailwind"]
+
+[markup]
+  _merge = "deep"
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[privacy]
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[outputs]
+  home = ['html', 'rss']
+  section = ['html', 'rss']
+  taxonomy = ['html']
+  term = ['html']

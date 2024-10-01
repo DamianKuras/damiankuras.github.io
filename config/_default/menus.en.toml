@@ -1,0 +1,11 @@
+[[main]]
+identifier = "post"
+name = "Post"
+pageRef = "/posts"
+weight = 10
+
+[[main]]
+identifier = "contact"
+name = "Contact"
+pageRef = "/contact"
+weight = 40
