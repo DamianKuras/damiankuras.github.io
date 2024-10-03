@@ -30,7 +30,7 @@ showAuthor = false
     link = 'https://damiankuras.com/posts/index.xml'
 
 [pwa]
-  enabled = true
+  enabled = false
   icon_sizes = [192, 512]
 
   # will be used as the manifest.json file and merge the default one
