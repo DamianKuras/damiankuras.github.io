@@ -1,0 +1,14 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "Animated GIF" }}
+{{ $caption := .Get "caption" }}
+{{ $autoplay := .Get "autoplay" }}
+{{ $loop := .Get "loop" }}
+
+<figure>
+    <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy" style="max-width: 100%; height: auto;">
+    {{ if .IsNamedParams }}
+    {{ if .Get "caption" }}
+    <figcaption>{{ .Get "caption" }}</figcaption>
+    {{ end }}
+    {{ end }}
+</figure>
