@@ -16,7 +16,7 @@ For any questions or collaboration opportunities, send me a message using the em
 
 ---
 
-{{< cloakemail address="damian.kuras@outlook.com" display="Send me a message!" query="subject=Contact Form Message">}}
+{{< cloakemail address="damian_kuras@outlook.com" display="Send me a message!" query="subject=Contact Form Message">}}
 
 ---
 
