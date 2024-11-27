@@ -61,98 +61,95 @@ If there's no such earlier occurrence, shift the pattern so that the longest pre
 
 ## Implementation in c++.
 
-Returns index of first occurrence of pattern in text if not found return -1.
+Return the indexes of all occurrences of the pattern in the text.
 
 ```cpp
-const int ALPHABET_LENGTH = 256;
-std::vector<int> MakeBadCharShiftArray(const std::string &pattern)
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+void createBadCharacterTable(const string &pattern, unordered_map<char, int> &badCharShift)
 {
-    int pattern_len = pattern.length();
-    std::vector<int> shift_array(ALPHABET_LENGTH);
-    for (int i = 0; i < ALPHABET_LENGTH; i++)
+    int m = pattern.size();
+    for (int i = 0; i < m; ++i)
     {
-        shift_array[i] = pattern_len;
+        badCharShift[pattern[i]] = i;
     }
-    for (int i = 0; i < pattern_len; i++)
-    {
-        shift_array[pattern[i]] = pattern_len - 1 - i;
-    }
-    return shift_array;
-}
-// is suffix of word starting from pos a prefix
-bool IsSuffixAPrefix(const std::string &word, int pos)
-{
-    int suffix_len = word.length() - pos;
-    for (int i = 0; i < suffix_len; i++)
-    {
-        if (word[i] != word[pos + i])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-// maximum length of the substring ends at pos and is a suffix
-int SuffixLen(const std::string &word, int pos)
-{
-    int len = 0;
-    while ((word[pos - len] == word[word.length() - 1 - len]) && (len <= pos))
-    {
-        ++len;
-    }
-    return len;
-}
-std::vector<int> MakeGoodSuffixShiftArray(const std::string &pattern)
-{
-    int pattern_len = pattern.length();
-    int last_prefix_pos = 1;
-    std::vector<int> shift_array(pattern_len);
-    for (int i = pattern_len - 1; i >= 0; i--)
-    {
-        if (IsSuffixAPrefix(pattern, i + 1))
-        {
-            last_prefix_pos = i + 1;
-        }
-        shift_array[i] = last_prefix_pos + (pattern_len - 1 - i);
-    }
-    for (int i = 0; i < pattern_len - 1; i++)
-    {
-        int suffix_len = SuffixLen(pattern, i);
-        if (pattern[i - suffix_len] != pattern[pattern_len - 1 - suffix_len])
-        {
-            shift_array[pattern_len - 1 - suffix_len] = pattern_len - 1 - i + suffix_len;
-        }
-    }
-    return shift_array;
 }
 
-int BMSearch(const std::string &text, const std::string &pattern)
+void createGoodSuffixTable(const string &pattern, vector<int> &goodSuffixShift)
 {
-    int text_len = text.length();
-    int pattern_len = pattern.length();
-    std::vector shift_bad_char = MakeBadCharShiftArray(pattern);
-    std::vector shift_good_suffix = MakeGoodSuffixShiftArray(pattern);
-    if (pattern_len == 0)
+    int m = pattern.size();
+    vector<int> borderPos(m + 1, 0);
+    int i = m, j = m + 1;
+    borderPos[i] = j;
+
+    while (i > 0)
     {
-        return -1;
+        while (j <= m && pattern[i - 1] != pattern[j - 1])
+        {
+            if (goodSuffixShift[j] == 0)
+            {
+                goodSuffixShift[j] = j - i;
+            }
+            j = borderPos[j];
+        }
+        --i;
+        --j;
+        borderPos[i] = j;
     }
-    int text_pos = pattern_len - 1;
-    while (text_pos < text_len)
+
+    for (int k = 0; k <= m; ++k)
     {
-        int patter_pos = pattern_len - 1;
-        while (patter_pos >= 0 && text[text_pos] == pattern[patter_pos])
+        if (goodSuffixShift[k] == 0)
         {
-            --patter_pos;
-            --text_pos;
+            goodSuffixShift[k] = j;
         }
-        if (patter_pos < 0)
+        if (k == j)
         {
-            return text_pos + 1;
+            j = borderPos[j];
         }
-        int shift = std::max(shift_bad_char[text[text_pos]], shift_good_suffix[patter_pos]);
-        text_pos += shift;
     }
-    return -1;
+}
+
+vector<int> boyerMoore(const string &text, const string &pattern)
+{
+    int n = text.size();
+    int m = pattern.size();
+    unordered_map<char, int> badCharShift;
+    vector<int> goodSuffixShift(m + 1, 0);
+    vector<int> matchPositions;
+    createBadCharacterTable(pattern, badCharShift);
+    createGoodSuffixTable(pattern, goodSuffixShift);
+
+    int i = 0;
+    while (i <= n - m)
+    {
+        int j = m - 1;
+
+        while (j >= 0 && pattern[j] == text[i + j])
+        {
+            --j;
+        }
+
+        if (j < 0)
+        {
+            matchPositions.push_back(i);
+            i += goodSuffixShift[0];
+        }
+        else
+        {
+            int badCharShiftValue = j - badCharShift[text[i + j]];
+            int goodSuffixShiftValue = goodSuffixShift[j + 1];
+            i += max(1, max(badCharShiftValue, goodSuffixShiftValue));
+        }
+    }
+
+    return matchPositions;
 }
 ```
 
