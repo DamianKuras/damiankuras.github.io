@@ -15,7 +15,7 @@ math = false
 
 ## Introduction
 
-The Boyer–Moore algorithm is a powerful tool for text searching, especially useful in applications where efficiency matters. Developed by **Robert S. Boyer** and **J Strother Moore** in 1977, this algorithm significantly outperforms naive string matching techniques by leveraging two key optimization rules that allow it to skip over large portions of text.
+The Boyer–Moore algorithm is a powerful tool for text searching, especially useful in applications where efficiency matters. Developed by **Robert S. Boyer** and **J Strother Moore** in 1977 [original paper](https://www.cs.utexas.edu/~moore/publications/fstrpos.pdf), this algorithm significantly outperforms naive string matching techniques by leveraging two key optimization rules that allow it to skip over large portions of text.
 
 ## How the Boyer-Moore Algorithm Works
 
@@ -59,6 +59,10 @@ If there's no such earlier occurrence, shift the pattern so that the longest pre
 
 ![Example showing shifts after application of good suffix rule](./images/good-suffix-rule.svg "Example showing shifts after application of the good suffix rule.")
 
+## Visualization
+
+{{< video src="Boyer-Moore" controls="true" autoplay="false" loop="false" >}}
+
 ## Implementation in c++.
 
 Return the indexes of all occurrences of the pattern in the text.
@@ -72,7 +76,8 @@ Return the indexes of all occurrences of the pattern in the text.
 
 using namespace std;
 
-void createBadCharacterTable(const string &pattern, unordered_map<char, int> &badCharShift)
+void createBadCharacterTable(const string &pattern,
+                             unordered_map<char, int> &badCharShift)
 {
     int m = pattern.size();
     for (int i = 0; i < m; ++i)
