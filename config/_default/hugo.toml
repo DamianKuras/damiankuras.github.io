@@ -1,6 +1,6 @@
 baseURL = "https://damiankuras.com/"
 title = "Damian Kuraś"
-copyright = "Damian Kuraś"
+
 pagination.pagerSize = 10
 languageCode = "en"
 enableEmoji = true
@@ -19,10 +19,6 @@ tag = "tags"
     disabled = false
     simple = true
 
-  [privacy.twitter]
-    disabled = false
-    enableDNT = true
-    simple = true
 
   [privacy.instagram]
     disabled = false

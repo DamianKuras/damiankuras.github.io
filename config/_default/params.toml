@@ -13,8 +13,8 @@ showAuthor = false
 [header]
 
 [footer]
-  since = 2022
   poweredby = false
+  since = false
 
 [social_media]
   [[social_media.items]]
